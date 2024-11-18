@@ -23,7 +23,8 @@ export default function HomeScreen() {
     const nextMonthIndex =  Number(new Date(nowDate.getFullYear(), nowDate.getMonth() + 1, 1));
     const daysInNowMonth = Math.round((nextMonthIndex - nowMonthIndex) / 1000 / 3600 / 24);
 
-    console.log(nowMonthIndex + ' дней');
+    console.log(nowDate.setUTCFullYear(2025, 11, 18));
+    console.log(new Date('2024-11-18T10:30:57.864Z') + 'eeee');
 
     let days = [];
     let weekDays = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
