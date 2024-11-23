@@ -1,23 +1,27 @@
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import React from "react";
+import React, {useEffect} from "react";
 
 export default function ScheduleItem({lesson}) {
-// console.log(lesson)
-    return(
-        <TouchableOpacity>
-            <Text style={{
-                borderWidth: 1,
-                borderColor: 'green',
-                borderRadius: 5,
-                fontSize: 15,
-                paddingHorizontal: 5,
-                paddingVertical: 3,
-                height: 30
-            }}>10:00</Text>
+    const hours = new Date(lesson.date).getUTCHours()
+    const minutes = new Date(lesson.date).getUTCMinutes()
+    return (
+        <TouchableOpacity style={styles.container}>
+            <Text style={{fontSize: 25}}>
+                {hours + ':' + (minutes === 0 ? minutes + '0' : minutes)}
+            </Text>
+            <Text style={{fontSize: 20}}>
+                {lesson.studentName}
+            </Text>
         </TouchableOpacity>
     )
 }
 const styles = StyleSheet.create({
+    container: {
+        flexDirection: "row",
+        gap: 10,
+        fontSize: 25,
+        alignItems: 'center'
+    },
     text: {
         fontSize: 25,
     },

@@ -32,6 +32,16 @@ export default function TabLayout() {
           ),
         }}
       />
+        <Tabs.Screen
+            name="schedule"
+            options={{
+                title: 'Расписание',
+                tabBarIcon: ({ color, focused }) => (
+                    <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+                ),
+            }}
+        />
     </Tabs>
+
   );
 }

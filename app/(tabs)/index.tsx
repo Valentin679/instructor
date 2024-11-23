@@ -1,30 +1,39 @@
-import {Image, StyleSheet, Platform, View, Text, FlatList} from 'react-native';
+import {Image, StyleSheet, Platform, View, Text, FlatList, TouchableOpacity} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 
 
 type ItemProps = {
     item: object;
 };
 
-function DayBlock ({item: {date, day, id}}: ItemProps) {
-    let idBlock = Date.parse(date)
+function DayBlock ({item, nowDate, setNowDate}) {
+
+    let idBlock = new Date(item.date).getDate() +1
+    // console.log(idBlock)
     return(
-    <View id={idBlock}
-          style={new Date().getDate() === id ? styles.dayBlockActive : styles.dayBlock}>
-        <Text style={new Date().getDate() === id ? styles.dayBlockDateActive : styles.dayBlockDate}>{id}</Text>
-        <Text style={new Date().getDate() === id ? styles.dayBlockWeekDayActive : styles.dayBlockWeekDay}>{day}</Text>
-    </View>)
+    <TouchableOpacity id={idBlock}
+          style={new Date().getDate() === item.id ? styles.dayBlockActive : styles.dayBlock}
+    onPress={()=>{
+        let newDate = new Date().setUTCDate(idBlock)
+        setNowDate(new Date(newDate))
+        console.log(nowDate)
+    }}
+    >
+        <Text style={new Date().getDate() === item.id ? styles.dayBlockDateActive : styles.dayBlockDate}>{item.id}</Text>
+        <Text style={new Date().getDate() === item.id ? styles.dayBlockWeekDayActive : styles.dayBlockWeekDay}>{item.day}</Text>
+    </TouchableOpacity>)
 };
 
 export default function HomeScreen() {
-    const nowDate = new Date()
+    const getDate = new Date()
+    const [nowDate, setNowDate] = useState(getDate)
     const nowMonthIndex = Number(new Date(nowDate.getFullYear(), nowDate.getMonth(), 1));
     const nextMonthIndex =  Number(new Date(nowDate.getFullYear(), nowDate.getMonth() + 1, 1));
     const daysInNowMonth = Math.round((nextMonthIndex - nowMonthIndex) / 1000 / 3600 / 24);
 
-    console.log(nowDate.setUTCFullYear(2025, 11, 18));
-    console.log(new Date('2024-11-18T10:30:57.864Z') + 'eeee');
+    // console.log(nowDate.setUTCFullYear(2025, 11, 18));
+    // console.log(new Date('2024-11-18T10:30:57.864Z') + 'eeee');
 
     let days = [];
     let weekDays = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
@@ -37,19 +46,16 @@ export default function HomeScreen() {
         });
         // console.log(days)
     }
-    // useEffect(() => {
-    //     flatListRef.current.scrollToIndex({
-    //             animated: true,
-    //             index: nowDate.getDay(),
-    //     });
-    // }, [nowDate]);
+    useEffect(() => {
+
+    }, [nowDate]);
 
     return (
                 <View style={{backgroundColor: '#fff'}}>
                     <Text>Main</Text>
                     <FlatList  data={days}
                                horizontal={true}
-                              renderItem={({item}) => <DayBlock item={item}/>}
+                              renderItem={({item}) => <DayBlock setNowDate={setNowDate} nowDate={nowDate} item={item}/>}
                               // keyExtractor={item => item.id}
                                showsHorizontalScrollIndicator={false}
                                initialScrollIndex={nowDate.getDate() -1}

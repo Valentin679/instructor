@@ -1,50 +1,50 @@
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import React from "react";
-import ScheduleItem from "@/components/Schedule/ScheduleItem";
-import ScheduleAdd from "@/components/Schedule/ScheduleAdd";
+import React, {useEffect} from "react";
 import {LESSONS} from "@/app/API";
+import ScheduleItem from "@/components/Schedule/ScheduleItem";
+import AddScheduleItem from "@/components/Schedule/AddScheduleItem";
 
+const lessons = LESSONS[0]
 
 const days = [
-    'ВС',
     'ПН',
     'ВТ',
     'СР',
     'ЧТ',
     'ПТ',
-    'СБ'
+    'СБ',
+    'ВС',
 ];
 
-export default function ScheduleDay() {
-    const lesson = LESSONS[0][1]
-    console.log(lesson.date)
-    const date = new Date(lesson.date)
-    const thisDay = days[date.getDay()]
-    const thisDate = date.getDate() + '.' + Number(date.getMonth() + 1)
+export default function ScheduleDay({currentDate}) {
+    // const schedule = day.map(lesson => {
+    //     return <ScheduleItem nowWeek={nowWeek} key={lesson.id} lesson={lesson}/>
+    // })
+    // console.log(lessons)
+    const currentDay = new Date(currentDate.getDate())
+    const schedule = lessons.filter(lesson => {
+        let lessonDay = new Date(lesson.date).getDate()
+        // console.log(lessonDate)
+        if (lessonDay === Number(currentDay)) {
+            return lesson
+        }
+    })
+    console.log(schedule)//сортировка по дате
+    const lessonsInDay = schedule.map(lesson => {
+        return <ScheduleItem key={lesson.id} lesson={lesson}/>
+    })
+    useEffect(() => {
 
-    console.log(thisDate)
+    }, [currentDate]);
     return(
         <View style={{
-            flexDirection: 'row',
+            flexDirection: 'column',
             justifyContent: 'flex-start',
             gap: 20,
             padding: 10,
-            borderColor: 'grey',
-            borderTopWidth: 1
         }}>
-            <View style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start'}}>
-                <Text style={{fontSize: 27}}>{thisDay}</Text>
-                <Text style={{fontSize: 15}}>{thisDate}</Text>
-            </View>
-            <View style={{flexDirection: 'row', flexWrap: 'wrap', gap: 10, width: '100%', paddingRight: 50}}>
-                <ScheduleItem lesson={LESSONS[0][1]}/>
-                <ScheduleItem/>
-                <ScheduleItem/>
-                <ScheduleItem/>
-                <ScheduleAdd/>
-
-            </View>
-
+            {lessonsInDay}
+            <AddScheduleItem/>
         </View>
     )
 }

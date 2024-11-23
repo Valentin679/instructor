@@ -2,27 +2,27 @@ export const LESSONS = [
     [
         {
             id: 1,
-            date: 'Mon Nov 18 2024 10:00:00 GMT+0300',
+            date: '2024-11-23T11:00:00.000Z',
             studentId: 12,
             studentName: "Петров Петр Петрович",
             lessonNum: 1,
-            week: 46
+            week: 47
         },
         {
             id: 2,
-            date: '2024-11-18T12:30:00.000Z',
+            date: '2024-11-23T12:30:00.000Z',
             studentId: 12,
             studentName: "Петров Петр Петрович",
             lessonNum: 2,
-            week: 46
+            week: 47
         },
         {
-            id: 2,
-            date: '2024-11-19T12:30:00.000Z',
+            id: 3,
+            date: '2024-11-24T14:00:00.000Z',
             studentId: 12,
             studentName: "Петров Петр Петрович",
             lessonNum: 3,
-            week: 46
+            week: 47
         }
     ]
 ]
