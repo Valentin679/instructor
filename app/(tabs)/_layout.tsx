@@ -4,6 +4,7 @@ import React from 'react';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -23,6 +24,15 @@ export default function TabLayout() {
           ),
         }}
       />
+        <Tabs.Screen
+        name="students"
+        options={{
+            title: 'Ученики',
+            tabBarIcon: ({ color, focused }) => (
+                <FontAwesome6 name="people-line" size={26} color={color} />
+            ),
+        }}
+    />
       <Tabs.Screen
         name="explore"
         options={{
