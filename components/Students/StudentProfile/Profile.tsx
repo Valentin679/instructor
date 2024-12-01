@@ -1,13 +1,14 @@
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import React, {useEffect, useState} from "react";
-import Modal from "@/app/modal";
+import ModalProfile from "@/app/students/modal-profile";
 import {Select} from "antd";
+import Grade from "@/components/Students/StudentProfile/Grades/Grade";
 
 const DATA = [
     {
         slug: 'trestle',
         name: 'Эстакада',
-        level: 5
+        level: 'Полностью освоен'
     },
     {
         slug: 'parallelParking',
@@ -36,36 +37,26 @@ const DATA = [
     }
 ]
 
-const selectList = [
-    { value: 5, label: 'Полностью освоен' },
-    { value: '4', label: 'Изредка требуется подсказка' },
-    { value: '3', label: 'Часто требуется подсказка' },
-    { value: '2', label: 'Ознакомлен' },
-    { value: '1', label: 'Не изучено' },
+
+const grades = [
+    {value: 5, label: 'Полностью освоен'},
+    {value: 4, label: 'Изредка требуется подсказка'},
+    {value: 3, label: 'Часто требуется подсказка'},
+    {value: 2, label: 'Ознакомлен'},
+    {value: 1, label: 'Не изучено'},
 ]
-
-
-
 export default function Profile() {
 
-    const [trestle, setTrestle] = useState()
-    const [parallelParking, setParallelParking] = useState()
 
 
     let list = DATA.map(el => {
-        return (<>
-            <Text key={el.slug}>{el.name}</Text>
-            <Select
-                id={el.slug}
-                defaultValue={el.level}
-                options={selectList}
-            >
-            </Select>
-        </>)
+        console.log(el)
+        return (<Grade key={el.slug} grade={el}/>)
     })
     return (
-            <View>
+            <View style={{padding: 10,}}>
                 {list}
+
             </View>)
 }
 const styles = StyleSheet.create({});

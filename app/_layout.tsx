@@ -31,8 +31,8 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
-        <Stack.Screen name="modal" />
-        <Stack.Screen name="profile" />
+        <Stack.Screen name="students/modal-profile" options={{ title: 'Профиль' }}/>
+        <Stack.Screen name="students/modal-addStudent" options={{ title: 'Добавить ученика' }}/>
       </Stack>
     </ThemeProvider>
   );
