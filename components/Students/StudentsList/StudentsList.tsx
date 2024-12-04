@@ -8,15 +8,15 @@ import {getStudents} from "@/api/fetchStudents";
 
 export default function StudentsList() {
     const [students, setStudents] = useState([])
-    getStudents().then(res => setStudents(res))
-    useEffect(() => {
 
-    }, [students.length > 0]);
+    useEffect(() => {
+        getStudents().then(res => setStudents(res))
+    }, []);
 
 
     const studentsList = students.map(student => (
-                <StudentsListItem key={student.id} student={student}/>
-    )
+                <StudentsListItem key={student._id} student={student} />
+    ))
 return (
     <View style={{flexDirection: 'column', gap: 10}}>
         {studentsList}

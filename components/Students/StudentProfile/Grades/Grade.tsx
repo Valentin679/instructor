@@ -17,13 +17,13 @@ export default function Grade({grade}: any) {
 // console.log(grade)
     const [exercise, setExercise] = useState(grade.name)
     const [level, setLevel] = useState(grade.level)
-
+// console.log(grade)
     useEffect(() => {
 
-        console.log(level)
+        // console.log(level)
     }, [level]);
     return (
-                <View key={grade.slug} style={{flexDirection: 'row',gap:20, marginVertical:10, justifyContent: 'space-between'}}>
+                <View key={grade.slug} style={{flexDirection: 'row', marginBottom: 5,  gap: 20, justifyContent: 'space-between'}}>
                     <Text key={grade.slug}>{exercise}</Text>
                     {level === selectList[0].label ? <Text style={{color: 'green'}}>{level}</Text> :
 
@@ -31,6 +31,7 @@ export default function Grade({grade}: any) {
                         id={grade.slug}
                         defaultValue={level}
                         options={selectList}
+                        size={"small"}
                         onChange={(value, option)=>{
                             if ("label" in option) {
                                 setLevel(option.label)

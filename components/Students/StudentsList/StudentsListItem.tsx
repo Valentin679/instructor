@@ -1,29 +1,47 @@
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import React, {useEffect, useState} from "react";
-import {Link} from "expo-router";
+import {Link, router} from "expo-router";
 
 
-export default function StudentsListItem({student}) {
-    // console.log(student)
-    const exercise = student.exercise
+export default function StudentsListItem({student}: any) {
+    const [exercise, setExercise]: any = useState(student.exercise)
+    // @ts-ignore
+    const goodExerc = exercise?.filter(e => {
+        return e.level === 'Полностью освоен'
+    })
+    // @ts-ignore
+    const badExerc = exercise?.filter(e => {
+        return e.level !== 'Изредка требуется подсказка' && e.level !== 'Полностью освоен'
+    })
     // console.log(exercise)
-    // const goodExercise = exercise.map(exerc => {
-    //     console.log(exerc)
-    // })
     return (
-        <Link href="/students/modal-profile">
-            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%'}}>
+        // <Link href="/students/modal-profile/">
+        <View>
+            <TouchableOpacity onPress={() => {
+                router.push(`/students/modal-profile?id=${student._id}`)
+            }} style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%'}}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 5}}>
-                    <Text style={{fontSize: 20, backgroundColor: '#76b716', borderRadius: '100%', paddingVertical: 3, paddingHorizontal: 5}}>{student.group}</Text>
-                    <Text style={{fontSize: 25}}>{student.firstName}</Text>
+                    <Text style={styles.group}>{student.group}</Text>
+                    <Text
+                        style={{fontSize: 25}}>{student.firstName} {student.lastName[0].toUpperCase()}. {student.surname[0].toUpperCase()}. </Text>
                 </View>
                 <Text style={{color: 'green'}}>{student.status.label}</Text>
-            </View>
+            </TouchableOpacity>
             <View style={{flexDirection: 'row', gap: 5}}>
-                <Text style={{fontSize: 15, color: 'green'}}>Параллельная парковка</Text>
-                <Text> -- </Text>
-                <Text style={{fontSize: 15, color: 'purple'}}>Гараж</Text>
+                <Text style={{fontSize: 15, color: 'green'}}>{goodExerc?.at(-1).name}</Text>
+                <Text> {goodExerc?.length === 0 ? '' : '-->'} </Text>
+                <Text style={{fontSize: 15, color: 'purple'}}>{badExerc?.at(0).name}</Text>
             </View>
-        </Link>)
+        </View>
+        // </Link>
+    )
 }
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    group: {
+        fontSize: 20,
+        backgroundColor: '#76b716',
+        borderRadius: 100,
+        paddingVertical: 3,
+        paddingHorizontal: 5
+    }
+});
