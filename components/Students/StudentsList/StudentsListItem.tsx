@@ -27,10 +27,18 @@ export default function StudentsListItem({student}: any) {
                 </View>
                 <Text style={{color: 'green'}}>{student.status.label}</Text>
             </TouchableOpacity>
-            <View style={{flexDirection: 'row', gap: 5}}>
-                <Text style={{fontSize: 15, color: 'green'}}>{goodExerc?.at(-1).name}</Text>
-                <Text> {goodExerc?.length === 0 ? '' : '-->'} </Text>
-                <Text style={{fontSize: 15, color: 'purple'}}>{badExerc?.at(0).name}</Text>
+            <View style={{flexDirection: 'row', justifyContent: "space-between"}}>
+                <View style={{flexDirection: 'row', gap: 5}}>
+                    <Text style={{fontSize: 15, color: 'green'}}>{goodExerc?.at(-1).name}</Text>
+                    <Text> {goodExerc?.length === 0 ? '' : '-->'} </Text>
+                    <Text style={{fontSize: 15, color: 'purple'}}>{badExerc?.at(0).name}</Text>
+                </View>
+                <View>
+                    <Text>{student.quantityPracticalLessons <= 27 ?
+                        student.quantityPracticalLessons + '/27' :
+                        student.quantityPracticalLessons - 27 + 'ДП'
+                    }</Text>
+                </View>
             </View>
         </View>
         // </Link>
@@ -40,8 +48,10 @@ const styles = StyleSheet.create({
     group: {
         fontSize: 20,
         backgroundColor: '#76b716',
-        borderRadius: 100,
-        paddingVertical: 3,
-        paddingHorizontal: 5
+        borderRadius: '50%',
+        paddingVertical: 5,
+        paddingHorizontal: 5,
+        textAlign: 'center',
+        width: '2em',
     }
 });

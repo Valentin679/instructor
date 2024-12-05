@@ -48,7 +48,7 @@ const grades = [
     {value: 1, label: 'Не изучено'},
 ]
 export default function Profile() {
-
+    const [isOpenGrades, setIsOpenGrades] = useState(false)
     const params = useLocalSearchParams<{ id?: string }>();
     const [studentId, setStudentId] = useState(params.id);
     const [student, setStudent]: any = useState()
@@ -62,8 +62,8 @@ export default function Profile() {
         return <Text>Loading</Text>
     } else {
         return (
-            <View style={{padding: 10}}>
-                <View style={{flexDirection: 'row', gap: 20, marginBottom: 20}}>
+            <View style={{width: '100%', height: '100%',}}>
+                <View style={{padding: 10, flexDirection: 'row', gap: 20, marginBottom: 20}}>
                     <Image source={require('../../../assets/images/profile.jpg')}
                            style={{width: 50, height: 100, objectFit: 'cover'}}/>
                     <View style={{flexDirection: 'column', gap: 10}}>
@@ -79,13 +79,33 @@ export default function Profile() {
 
                 </View>
                 <View>
-                    {// @ts-ignore
-                        student.exercise.map(el => {
-                            // console.log(el)
-                            return (<Grade key={el.slug} grade={el}/>)
-                        })}
+                    <TouchableOpacity
+                        style={{backgroundColor: 'orange', padding: 10}}
+                        onPress={()=>{
+                            isOpenGrades ? setIsOpenGrades(false) : setIsOpenGrades(true)
+                        }}
+                    >
+                        <Text style={{fontSize: 17, color: 'white', textAlign: 'center'}}>Навыки</Text>
+                    </TouchableOpacity>
+
+                    <View style={isOpenGrades ? styles.viewGrades : styles.hiddenGrades}>
+                        {// @ts-ignore
+                            student.exercise.map(el => {
+                                // console.log(el)
+                                return (<Grade key={el.slug} grade={el}/>)
+                            })}
+                    </View>
                 </View>
             </View>)
     }
 }
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    hiddenGrades: {
+        height: 0,
+        overflow: 'hidden'
+    },
+    viewGrades: {
+        padding: 10,
+        height: 100,
+    }
+});
