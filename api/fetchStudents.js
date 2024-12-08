@@ -31,6 +31,18 @@ export const addStudent = async (data) => {
     }
 }
 
+export const editStudentGrades = async () => {
+    await fetch('http://localhost:8800/api/students/category/b', {
+        method: 'PUT',
+        //
+        body: JSON.stringify({
+
+        }),
+        headers: {
+            'Content-type': 'application/json; charset=utf-8'
+        }
+    })
+}
 
 export const putStudent = async (changedMaterialsId, title, category, price) => {
     await fetch('http://localhost:8800/api/students/category/b', {
