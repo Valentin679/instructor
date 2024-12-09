@@ -1,7 +1,8 @@
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import React, {useEffect, useState} from "react";
 import ModalProfile from "@/app/students/modal-profile";
-import {Select} from "antd";
+import {Button, Select} from "antd";
+import {editStudentGrades} from "@/api/fetchStudents";
 
 const selectList = [
     { value: 5, label: 'Полностью освоен' },
@@ -13,10 +14,13 @@ const selectList = [
 
 
 
-export default function Grade({grade}: any) {
-// console.log(grade)
+export default function Grade({id, grade}: any) {
+console.log(id)
+console.log(grade)
     const [exercise, setExercise] = useState(grade.name)
     const [level, setLevel] = useState(grade.level)
+    const [slug, setSlug] = useState(grade.slug)
+    const [changed, setChanged] = useState(false)
 // console.log(grade)
     useEffect(() => {
 
@@ -35,11 +39,15 @@ export default function Grade({grade}: any) {
                         onChange={(value, option)=>{
                             if ("label" in option) {
                                 setLevel(option.label)
+                                setChanged(true)
                             }
                         }}
                     >
-                    </Select>
-                    }
+                    </Select>}
+                    {changed ? <View><Button onClick={()=>{
+                        editStudentGrades(id, slug, level)
+                    }}>Save</Button></View> : null}
+
                 </View>)
 }
 const styles = StyleSheet.create({});

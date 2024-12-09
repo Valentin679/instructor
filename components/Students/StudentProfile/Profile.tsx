@@ -1,10 +1,11 @@
 import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import React, {useEffect, useState} from "react";
 import ModalProfile from "@/app/students/modal-profile";
-import {Select} from "antd";
+import {Button, Select} from "antd";
 import Grade from "@/components/Students/StudentProfile/Grades/Grade";
 import {router, useLocalSearchParams} from "expo-router";
 import {getStudentById, getStudents} from "@/api/fetchStudents";
+import {index} from "@zxing/text-encoding/es2015/encoding/indexes";
 
 // const DATA = [
 //     {
@@ -52,12 +53,12 @@ export default function Profile() {
     const params = useLocalSearchParams<{ id?: string }>();
     const [studentId, setStudentId] = useState(params.id);
     const [student, setStudent]: any = useState()
-    // const [exercise, setExercise] = useState()
+    const [exercise, setExercise] = useState(new Map())
     useEffect(() => {
         getStudentById(studentId).then(res => setStudent(res))
     }, [studentId]);
 
-    console.log(student)
+    // console.log(student)
     if (!student) {
         return <Text>Loading</Text>
     } else {
@@ -90,10 +91,12 @@ export default function Profile() {
 
                     <View style={isOpenGrades ? styles.viewGrades : styles.hiddenGrades}>
                         {// @ts-ignore
-                            student.exercise.map(el => {
-                                // console.log(el)
-                                return (<Grade key={el.slug} grade={el}/>)
+                            student.exercise.map((el, index) => {
+                                return (<Grade id={studentId} key={el.slug} grade={el}/>)
                             })}
+{/*                        <Button type={"primary"} onClick={()=>{*/}
+{/*// console.log(exercise)*/}
+{/*                        }}>Сохранить оценки</Button>*/}
                     </View>
                 </View>
             </View>)

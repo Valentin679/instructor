@@ -31,12 +31,12 @@ export const addStudent = async (data) => {
     }
 }
 
-export const editStudentGrades = async () => {
-    await fetch('http://localhost:8800/api/students/category/b', {
-        method: 'PUT',
+export const editStudentGrades = async (id, slug, level) => {
+    await fetch('http://localhost:8800/api/students/category/b/edit', {
+        method: 'POST',
         //
         body: JSON.stringify({
-
+            id, slug, level
         }),
         headers: {
             'Content-type': 'application/json; charset=utf-8'
