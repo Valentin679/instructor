@@ -92,7 +92,7 @@ export default function Profile() {
                     <View style={isOpenGrades ? styles.viewGrades : styles.hiddenGrades}>
                         {// @ts-ignore
                             student.exercise.map((el, index) => {
-                                return (<Grade id={studentId} key={el.slug} grade={el}/>)
+                                return (<Grade indexGrade={index} id={studentId} key={el.slug} grade={el}/>)
                             })}
 {/*                        <Button type={"primary"} onClick={()=>{*/}
 {/*// console.log(exercise)*/}

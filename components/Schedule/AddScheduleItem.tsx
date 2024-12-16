@@ -1,11 +1,14 @@
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import React, {useEffect} from "react";
+import React, {useEffect} from "react"
+import Button from "@/components/UI/Button";
 
 export default function AddScheduleItem() {
     return (
-        <TouchableOpacity style={styles.container}>
-            <Text style={styles.text}>Записать</Text>
-        </TouchableOpacity>
+
+        <Button><Text style={styles.text}>Записать</Text></Button>
+        // <TouchableOpacity style={styles.container}>
+        //     <Text style={styles.text}>Записать</Text>
+        // </TouchableOpacity>
     )
 }
 const styles = StyleSheet.create({

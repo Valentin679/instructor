@@ -1,9 +1,9 @@
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import React, {useEffect, useState} from "react";
 import StudentsListItem from "@/components/Students/StudentsList/StudentsListItem";
 import {Link} from "expo-router";
-import {Button} from "antd";
 import {getStudents} from "@/api/fetchStudents";
+import Button from "@/components/UI/Button";
 
 
 export default function StudentsList() {
@@ -14,9 +14,12 @@ export default function StudentsList() {
     }, []);
 
 
-    const studentsList = students.map(student => (
-                <StudentsListItem key={student._id} student={student} />
-    ))
+    const studentsList = students.map(student => {
+        const {_id} = student;
+        return (
+            <StudentsListItem key={_id} student={student}/>
+        );
+    })
 return (
     <View style={{flexDirection: 'column', gap: 10}}>
         {studentsList}
@@ -29,7 +32,7 @@ return (
                 textAlign: 'center'
             }}
             href="/students/modal-addStudent">
-            <Button type={"primary"}>Добавить ученика</Button>
+            <Button>Добавить ученика</Button>
         </Link>
     </View>)
 }

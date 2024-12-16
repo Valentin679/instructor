@@ -1,8 +1,11 @@
-import {StyleSheet, Text, View} from 'react-native';
-import {Button, Input, Select} from "antd";
-import {useEffect, useState} from "react";
+import {StyleSheet, Text, TextInput, View} from 'react-native';
+// import { Select} from "antd";
+import React, {useEffect, useState} from "react";
 import {addStudent} from "@/api/fetchStudents";
 import {router} from "expo-router";
+import Button from '@/components/UI/Button';
+import Input from "@/components/UI/Input";
+import Select from "@/components/UI/Select";
 
 const statuses = [
     {
@@ -27,14 +30,21 @@ const statuses = [
     }
 ]
 
-const instructors = [
+const instructorsList = [
+    // {
+    //     value: 99,
+    //     label: 'Не назначен',
+    //
+    // },
     {
+        value: 1,
         label: 'Мезенин Валентин Андреевич',
-        value: 1
+
     },
     {
+        value: 2,
         label: 'Давыдов Николай Николаевич',
-        value: 2
+
     },
 ]
 
@@ -142,32 +152,73 @@ export default function ModalAddStudent() {
     const [surname, setSurname] = useState()
     const [phone, setPhone] = useState()
     const [group, setGroup] = useState()
-    const [instructor, setInstructor] = useState('Не назначен')
+    const [instructor, setInstructor] = useState('')
     const [status, setStatus] = useState(statuses[0])
     useEffect(() => {
-    }, [status, instructor,firstName,lastName,surname]);
+    }, [status, instructor, firstName, lastName, surname]);
     return (
         <View style={styles.container}>
             <Text>Введите данные ученика</Text>
-            <Input onChange={(e)=>{setFirstName(e.target.value)}} placeholder={'Фамилия'}></Input>
-            <Input onChange={(e)=>{setLastName(e.target.value)}} placeholder={'Имя'}></Input>
-            <Input onChange={(e)=>{setSurname(e.target.value)}} placeholder={'Отчество'}></Input>
-            <Input onChange={(e)=>{setPhone('+7' + e.target.value)}} prefix={'+7'} minLength={10} maxLength={10}  placeholder={'Номер телефона'}></Input>
-            <Input onChange={(e)=>{setGroup(e.target.value)}} maxLength={2} placeholder={'Номер группы'}></Input>
-            <Select options={statuses} defaultValue={status}
-                    onChange={(value, option) => {
-                        if ("label" in option) {
-                            setStatus({value, label: option.label})
-                        }
-                    }}
+            {/*<TextInput onChangeText={(text)=>{setFirstName(text)}} placeholder={'Фамилия'}></TextInput>*/}
+            <Input onChange={(text: string) => {
+                setFirstName(text)
+            }} placeholder={'Фамилия'}></Input>
+            <Input onChange={(text: string) => {
+                setLastName(text)
+            }} placeholder={'Имя'}></Input>
+            <Input onChange={(text: string) => {
+                setSurname(text)
+            }} placeholder={'Отчество'}></Input>
+            <Input onChange={(text: string) => {
+                setPhone('+7' + text)
+            }} prefix={'+7'} minLength={10} maxLength={10} placeholder={'Номер телефона'}></Input>
+            <Input onChange={(text: string) => {
+                setGroup(text)
+            }} maxLength={2} placeholder={'Номер группы'}></Input>
+            <Select options={statuses}
+                    onChange={(value) => {
+                        const statusValue = statuses.find(e => {
+                            return e.value
+                        })
+                        console.log(statusValue)
+                        setStatus(statusValue)
+                    }
+                    }
             />
-            <Select options={instructors} defaultValue={instructor}
-                    onChange={(value, option) => {
-                        if ("label" in option) {
-                            setInstructor({ value, label: option.label})
-                        }
-                    }}/>
-            <Button type="primary" onClick={()=>{
+            <Select options={instructorsList}
+                    // placeholder={instructor}
+                    onChange={(value) => {
+                        // console.log(value)
+                        const instructorValue = instructorsList.find(i => {
+                            return i.value
+                            // console.log(i.value)
+
+
+                            // return console.log(i.value == value)
+                        })
+
+                        console.log(instructorValue)
+                        setInstructor(instructorValue)
+                        // console.log(instructor)
+                    }
+                    }
+            />
+            {/*<Select options={statuses} defaultValue={status}*/}
+            {/*        onChange={(value, option) => {*/}
+            {/*            if ("label" in option) {*/}
+            {/*                // @ts-ignore*/}
+            {/*                setStatus({value, label: option.label})*/}
+            {/*            }*/}
+            {/*        }}*/}
+            {/*/>*/}
+            {/*<Select options={instructors} defaultValue={instructor}*/}
+            {/*        onChange={(value, option) => {*/}
+            {/*            if ("label" in option) {*/}
+            {/*                // @ts-ignore*/}
+            {/*                setInstructor({ value, label: option.label})*/}
+            {/*            }*/}
+            {/*        }}/>*/}
+            <Button onClick={() => {
                 const data = {
                     firstName,
                     lastName,
@@ -180,7 +231,7 @@ export default function ModalAddStudent() {
                     exercise
                 }
                 console.log(data)
-                addStudent(data).then(res=> {
+                addStudent(data).then(res => {
                     console.log(res)
                     router.replace('/students')
                 })

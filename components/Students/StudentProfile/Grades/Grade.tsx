@@ -14,7 +14,7 @@ const selectList = [
 
 
 
-export default function Grade({id, grade}: any) {
+export default function Grade({id, grade, indexGrade}: any) {
 console.log(id)
 console.log(grade)
     const [exercise, setExercise] = useState(grade.name)
@@ -45,7 +45,7 @@ console.log(grade)
                     >
                     </Select>}
                     {changed ? <View><Button onClick={()=>{
-                        editStudentGrades(id, slug, level)
+                        editStudentGrades(id, slug, level, indexGrade)
                     }}>Save</Button></View> : null}
 
                 </View>)

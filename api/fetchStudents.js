@@ -1,5 +1,10 @@
+const instance = {
+    url: 'https://instructorexpress.vercel.app/'
+}
+
+
 export async function getStudents() {
-    const response = await fetch("http://localhost:8800/api/students/category/b", {
+    const response = await fetch(instance.url + "api/students/category/b", {
         method: "GET",
         headers: { "Accept": "application/json" }
     });
@@ -9,7 +14,7 @@ export async function getStudents() {
 }
 
 export async function getStudentById(id) {
-    const response = await fetch("http://localhost:8800/api/students/category/b/"+id, {
+    const response = await fetch(instance.url + "api/students/category/b/"+id, {
         method: "GET",
         headers: { "Accept": "application/json" }
     });
@@ -19,7 +24,7 @@ export async function getStudentById(id) {
 }
 
 export const addStudent = async (data) => {
-    const response = await fetch('http://localhost:8800/api/students/category/b', {
+    const response = await fetch(instance.url + "api/students/category/b", {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -31,39 +36,13 @@ export const addStudent = async (data) => {
     }
 }
 
-export const editStudentGrades = async (id, slug, level) => {
-    await fetch('http://localhost:8800/api/students/category/b/edit', {
-        method: 'POST',
-        //
-        body: JSON.stringify({
-            id, slug, level
-        }),
-        headers: {
-            'Content-type': 'application/json; charset=utf-8'
-        }
-    })
-}
-
-export const putStudent = async (changedMaterialsId, title, category, price) => {
-    await fetch('http://localhost:8800/api/students/category/b', {
+export const editStudentGrades = async (id, slug, level,index) => {
+    await fetch(instance.url + "api/students/category/b/edit", {
         method: 'PUT',
         //
         body: JSON.stringify({
-            oldTitle: changedMaterialsId,
-            title: title,
-            category: category.value,
-            categoryTitle: category.label,
-            price: price
+            id, slug, level, index
         }),
-        headers: {
-            'Content-type': 'application/json; charset=utf-8'
-        }
-    })
-}
-
-export const deleteMaterials = async (id) => {
-    await fetch('https://ratapi.vercel.app/api/materials/' + id, {
-        method: 'DELETE',
         headers: {
             'Content-type': 'application/json; charset=utf-8'
         }
